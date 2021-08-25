@@ -1,6 +1,9 @@
 package com.bl.birdsanctuary;
 
+import java.util.EnumSet;
 import java.util.Scanner;
+
+import com.bl.birdsanctuary.Bird.Color;
 
 public class Main {
 
@@ -45,11 +48,12 @@ public class Main {
 		int option = 0;
 		Scanner scanner = new Scanner(System.in);
 		final int EXIT_VALUE = 10;
+		ViewLayer viewLayer = new ViewLayer();
 		
 		while(option!=EXIT_VALUE) {
 		System.out.println("Enter your option");
 		System.out.println("1. Add a bird\n2. Remove a Bird\n3. Print all the birds\n4. Print Swimable\n"
-				+ "5. Print Flyable\n6. Print Eatable\n" + EXIT_VALUE + ". Exit");
+		+ "5. Print Flyable\n6. Print Eatable\n7. Edit Bird\n" + EXIT_VALUE + ". Exit");
 		option=scanner.nextInt();
 		switch(option) {
 		case 1: Parrot parrot = new Parrot();
@@ -82,25 +86,73 @@ public class Main {
 		        }
 		      break;
 		      
-		case 3: ViewLayer viewLayer = new ViewLayer();
-				viewLayer.print();
+		case 3: viewLayer.print();
 				break;
 				
-		case 4: viewLayer = new ViewLayer(); 
-				viewLayer.printSwimmable();
+		case 4: viewLayer.printSwimmable();
 				break;
 				
-		case 5: viewLayer = new ViewLayer(); 
-				viewLayer.printFlyable();
+		case 5: viewLayer.printFlyable();
 				break;
 				
-		case 6: viewLayer = new ViewLayer(); 
-				viewLayer.printEatable();
+		case 6: viewLayer.printEatable();
 				break;
-			
+				
+		case 7: editBird();
+				break;
 		}
 		
 	}
 
+	}
+	private void editBird() {
+		
+		System.out.println("Enter the bird name to edit");
+		Scanner scanner = new Scanner(System.in);
+		String birdname = scanner.nextLine();
+		int choice=0;
+		Bird editBirdobj = BirdSanctuaryRepository.getInstance().getBird(birdname);
+		
+		while(choice != 4) {
+		System.out.println("1. Edit Bird name\n2. Edit id\n3. Edit Color\n4. Exit");
+		choice = scanner.nextInt();
+		switch(choice) {
+		case 1: System.out.println("Enter the new name");
+				scanner = new Scanner(System.in);
+				String newName = scanner.nextLine();
+				editBirdobj.name = newName;
+				break;
+				
+		case 2: System.out.println("Enter the new id");
+				scanner = new Scanner(System.in);
+				String newID = scanner.nextLine();
+				editBirdobj.id = newID;
+				break;
+		
+		case 3: System.out.println("Choose the new color");
+				scanner = new Scanner(System.in);
+//				String newColor = scanner.nextLine();
+//				editBirdobj.color = (Color)newColor;
+//				EnumSet.allOf(Bird.Color.class)
+//            .forEach(season -> System.out.println(season));
+				int count = 1;
+			for ( Bird.Color color: EnumSet.allOf(Bird.Color.class)) {
+				System.out.println(count + ". " + color);
+				count += 1;
+			}
+			int colorChoice = scanner.nextInt();
+			int count1 = 1;
+			for ( Bird.Color color: EnumSet.allOf(Bird.Color.class)) {
+				if (colorChoice == count1) {
+					editBirdobj.color = color;
+				}
+				
+				count1 += 1;
+			}
+				break;
+			
+		
+		}
+		}
 	}
 }

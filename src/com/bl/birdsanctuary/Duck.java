@@ -1,19 +1,15 @@
 package com.bl.birdsanctuary;
 
-public class Duck extends Bird {
+public class Duck extends Bird implements Swimmable{
 
 	public Duck() {
 		color = Color.GREY;
 		name = "Duck";
 	}
 
-	@Override
-	void fly() {
-		System.out.println(name+" can fly");
-	}
 
 	@Override
-	void swim() {
+	public void swim() {
 		System.out.println(name+" can swim");	
 	}
 

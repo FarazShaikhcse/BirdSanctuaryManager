@@ -7,13 +7,6 @@ public class Ostrich extends Bird  {
 		name = "Ostrich";
 	}
 
-	@Override
-	void fly() {
-	}
-
-	@Override
-	void swim() {
-	}
 
 	@Override
 	void eat() {
