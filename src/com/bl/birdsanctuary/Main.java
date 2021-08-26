@@ -56,33 +56,40 @@ public class Main {
 		+ "5. Print Flyable\n6. Print Eatable\n7. Edit Bird\n" + EXIT_VALUE + ". Exit");
 		option=scanner.nextInt();
 		switch(option) {
-		case 1: Parrot parrot = new Parrot();
-			parrot.id = "p001";
-			Duck duck = new Duck();
-			duck.id = "d001";
-			Ostrich ostrich = new Ostrich();
-			ostrich.id = "ost001";
-			Penguin penguin = new Penguin();
-			penguin.id = "pn001";	
+		case 1: 
+			addTemporaryBirds();
+			addBird();
 			
-			BirdSanctuaryRepository birdSanctuaryRepository = BirdSanctuaryRepository.getInstance();
-			birdSanctuaryRepository.add(parrot);
-			birdSanctuaryRepository.add(duck);
-			birdSanctuaryRepository.add(ostrich);
-			birdSanctuaryRepository.add(penguin);
+			
+//			Parrot parrot = new Parrot();
+//			parrot.id = "p001";
+//			Duck duck = new Duck();
+//			duck.id = "d001";
+//			Ostrich ostrich = new Ostrich();
+//			ostrich.id = "ost001";
+//			Penguin penguin = new Penguin();
+//			penguin.id = "pn001";	
+//			
+//			BirdSanctuaryRepository birdSanctuaryRepository = BirdSanctuaryRepository.getInstance();
+//			birdSanctuaryRepository.add(parrot);
+//			birdSanctuaryRepository.add(duck);
+//			birdSanctuaryRepository.add(ostrich);
+//			birdSanctuaryRepository.add(penguin);
 			break;
 			
-		case 2: System.out.println("Enter the Bird name to be removed");
+		case 2: 
+				System.out.println("Enter the Bird name to be removed");
 				Scanner reader = new Scanner(System.in);
-		        String name = reader.nextLine();
-		        birdSanctuaryRepository = BirdSanctuaryRepository.getInstance();
-		        Bird bird = birdSanctuaryRepository.getBird(name);
-		        if(bird==null) {
+		        String name1 = reader.nextLine();
+		        BirdSanctuaryRepository birdSanctuaryRepository = BirdSanctuaryRepository.getInstance();
+
+		        Bird bird1 = birdSanctuaryRepository.getBird(name1);
+		        if(bird1 == null) {
 		        	System.out.println("Bird doesn't exist");
 		        }
 		        else {
-		        birdSanctuaryRepository.remove(bird);
-		        System.out.println(name+" removed");
+		        birdSanctuaryRepository.remove(bird1);
+		        System.out.println(name1+" removed");
 		        }
 		      break;
 		      
@@ -104,6 +111,61 @@ public class Main {
 		
 	}
 
+	}
+	private void addBird() {
+		Bird bird = new Bird();
+		System.out.println("Enter the id");
+		Scanner scanner = new Scanner(System.in);
+		String id = scanner.nextLine();
+		bird.id = id;
+		System.out.println("Enter the name");
+		scanner = new Scanner(System.in);
+		String name = scanner.nextLine();
+		bird.name = name;
+		System.out.println("Choose the color");
+		int count = 1;
+		for ( Bird.Color color: EnumSet.allOf(Bird.Color.class)) {
+			System.out.println(count + ". " + color);
+			count += 1;
+		}
+		int colorChoice = scanner.nextInt();
+		int count1 = 1;
+		for ( Bird.Color color: EnumSet.allOf(Bird.Color.class)) {
+			if (colorChoice == count1) {
+				bird.color = color;
+			}
+			
+			count1 += 1;
+		}
+		System.out.println("Can the bird fly?");
+		Boolean canFly = scanner.nextBoolean();
+		bird.canFly = canFly;
+		System.out.println("Can the bird swim?");
+		Boolean canSwim = scanner.nextBoolean();
+		bird.canSwim = canSwim;
+		BirdSanctuaryRepository birdSanctuaryRepository = BirdSanctuaryRepository.getInstance();
+		birdSanctuaryRepository.add(bird);
+		
+	}
+	//this method has to be deleted while in production
+	private void addTemporaryBirds() {
+		BirdSanctuaryRepository birdSanctuaryRepository = BirdSanctuaryRepository.getInstance();
+		Bird duck = new Bird();
+		duck.id = "d001";
+		duck.name = "Duck";
+		duck.color = Bird.Color.BLACK;
+		duck.canFly = false;
+		duck.canSwim = true;
+		birdSanctuaryRepository.add(duck);
+		Bird penguin = new Bird();
+		penguin.id = "p001";
+		penguin.name = "Penguin";
+		penguin.color = Bird.Color.WHITE;
+		penguin.canFly = false;
+		penguin.canSwim = true;
+		birdSanctuaryRepository.add(penguin);
+		
+		
 	}
 	private void editBird() {
 		
